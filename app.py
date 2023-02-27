@@ -13,6 +13,10 @@ import requests
 import settings
 
 
+def run_bash():
+    pass
+
+
 def make_msg_to_bot(json_dict):
     """
     The function parses the JSON file from the API response and
