@@ -1,4 +1,8 @@
 """
+---BASH SCRIPT CONF---
+"""
+CD_PATH = '/home/igor/prj/ground'  # Path to project directory/Needed for a bash script!
+"""
 ---MAIL TESTER API SETTINGS---
 You need to register an account in (https://www.mail-tester.com/).
 They give 20 tests for free.
@@ -6,19 +10,25 @@ In the variable USER_NAME_MAIL_TESTER we indicate the name of the registered acc
 in the variable PROJECT_NAME we indicate the name of the project.
 Variables values are automatically substituted into the link for the API.
 """
-USER_NAME_MAIL_TESTER = 'k3nny'
+USER_NAME_MAIL_TESTER = 'igooooor'
 PROJECT_NAME = 'test'
 API_URL = f'https://www.mail-tester.com/{USER_NAME_MAIL_TESTER}-{PROJECT_NAME}&format=json'
 
 """
 ---MAIL SETTINGS---
-We need two-step authentication on the account, if google, and create an application password,
-we use it to send via SMTP.
+We need two-step authentication on the account in google and create an application password,
+We use it to send ERROR notification via SMTP.
 """
 USER_SENDER = 'ezerskiyigor2000@gmail.com'
 SENDER_PASSWORD = 'pteswlonlallwjoo'
-USER_RECIPIENT = f'{USER_NAME_MAIL_TESTER}-{PROJECT_NAME}@mail-tester.com'
-MESSAGE = 'TEST!!!'
+USER_RECIPIENT = f'{USER_NAME_MAIL_TESTER}-{PROJECT_NAME}@mail-tester.com'  # Needed for a bash script!
+
+"""
+---TEST MESSAGE SETTINGS---
+Here we write down the message and the subject for the test letter.
+"""
+MESSAGE = 'TEST!sefe!!'  # Needed for a bash script!
+SUBJECT = 'Test Email with exceptions'  # Needed for a bash script!
 
 """
 ---TELEGRAM API SETTINGS---
