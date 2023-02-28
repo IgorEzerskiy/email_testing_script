@@ -1,4 +1,8 @@
 """
+---BASH SCRIPT CONF---
+"""
+CD_PATH = '/home/igor/prj/ground'  # Path to project directory/Needed for a bash script!
+"""
 ---MAIL TESTER API SETTINGS---
 You need to register an account in (https://www.mail-tester.com/).
 They give 20 tests for free.

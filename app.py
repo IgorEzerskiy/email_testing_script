@@ -23,7 +23,8 @@ def run_bash():
     try:
         proc = subprocess.run([f'./run_email_command.sh "{settings.MESSAGE}" '
                                f'"{settings.USER_RECIPIENT}" '
-                               f'"{settings.SUBJECT}"'],
+                               f'"{settings.SUBJECT}" '
+                               f'"{settings.CD_PATH}"'],
                               shell=True)
         print(proc)
     except Exception as _ex:
@@ -45,6 +46,7 @@ def make_msg_to_bot(json_dict):
         sender_ip = json_dict['signature']['subtests']['aRecord']['tested']
         sender_ip = ''.join([x for x in sender_ip if x.isdigit() or x == '.']).lstrip('..')
         return f'Sender IP: {sender_ip}\n' \
+               f'Project: {settings.PROJECT_NAME}\n' \
                f'Sender address: {json_dict["messageInfo"]["bounceAddress"]}\n' \
                f'MailBox email: {json_dict["mailboxId"]}@mail-tester.com\n' \
                f'Date: {datetime.datetime.today().strftime("%d.%m.%Y")}\n' \

@@ -6,7 +6,8 @@ echo $command
 echo $1
 echo $2
 echo $3
-cd /home/igor/prj/ground
+echo $4
+cd $4
 docker-compose exec -u root -T php touch $test
 docker-compose exec -u root -T php echo $command >> $test
 docker-compose exec -u root -T php more $test | docker-compose exec -u root -T php php artisan tinker
