@@ -7,6 +7,7 @@ pip freeze < requirements.txt
 import datetime
 import pprint
 import smtplib
+import subprocess
 import time
 
 import requests
@@ -14,7 +15,22 @@ import settings
 
 
 def run_bash():
-    pass
+    """
+    This function runs a bash script with three positional parameters passed to it.
+    All settings in the settings.py file
+    :return:
+    """
+    try:
+        proc = subprocess.run([f'./run_email_command.sh "{settings.MESSAGE}" '
+                               f'"{settings.USER_RECIPIENT}" '
+                               f'"{settings.SUBJECT}"'],
+                              shell=True)
+        print(proc)
+    except Exception as _ex:
+        err = f'{_ex}\nSCRIPT ERROR\nProject: {settings.PROJECT_NAME}'
+        send_result_to_bot(err)
+        print(err)
+        raise SystemExit from _ex
 
 
 def make_msg_to_bot(json_dict):
@@ -26,9 +42,8 @@ def make_msg_to_bot(json_dict):
     :return:
     """
     try:
-        sender_ip = [str_ip for str_ip in json_dict['body']['raw']['content'].split('\n')
-                     if str_ip.endswith(']\r')][0]
-        sender_ip = "".join([x for x in sender_ip if x.isdigit() or x == "."]).rstrip("..")
+        sender_ip = json_dict['signature']['subtests']['aRecord']['tested']
+        sender_ip = ''.join([x for x in sender_ip if x.isdigit() or x == '.']).lstrip('..')
         return f'Sender IP: {sender_ip}\n' \
                f'Sender address: {json_dict["messageInfo"]["bounceAddress"]}\n' \
                f'MailBox email: {json_dict["mailboxId"]}@mail-tester.com\n' \
@@ -49,7 +64,7 @@ def send_result_to_bot(msg_):
     The function takes as an argument the generated message from the make_msg_to_bot function.
     Then, using the API, sends a message to the telegram bot.
     When an error is received, if the telegram bot API does not work,
-    the function will send an email to the sender's email specified in the settings,
+    the function will send email to the sender's email specified in the settings,
     with a message that the telegram API is not available.
     :param msg_:
     :return:
@@ -97,7 +112,7 @@ def send_email(message_, err):
         raise SystemExit from _ex
 
 
-def sleep_(time_=25):
+def sleep_(time_=35):
     """
     The function is waiting for an API response. The default is 25 seconds.
     :param time_:
@@ -108,8 +123,8 @@ def sleep_(time_=25):
 
 
 if __name__ == '__main__':
-
-    send_email(message_=settings.MESSAGE, err=False)
+    # send_email(message_=settings.MESSAGE, err=False)
+    run_bash()
 
     sleep_()
 
